@@ -1,0 +1,38 @@
+[project]
+name = "pesaguard-api"
+version = "0.1.0"
+description = "PesaGuard V2 backend: HTTP API and background worker"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi", "uvicorn[standard]", "pydantic", "pydantic-settings",
+  "sqlalchemy>=2", "alembic", "psycopg[binary]", "httpx",
+  "argon2-cffi", "jinja2", "python-json-logger",
+  "sentry-sdk[fastapi]", "opentelemetry-sdk", "opentelemetry-exporter-otlp",
+  "opentelemetry-instrumentation-fastapi", "opentelemetry-instrumentation-sqlalchemy",
+  "opentelemetry-instrumentation-httpx", "resend",
+]
+
+[dependency-groups]
+dev = ["pytest", "pytest-cov", "respx", "factory-boy", "ruff", "mypy", "bandit", "pip-audit"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pesaguard_api"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.mypy]
+strict = true
+files = ["src/pesaguard_api"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.coverage.run]
+source = ["src/pesaguard_api"]
